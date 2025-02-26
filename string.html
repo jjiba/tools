@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String</title>
+</head>
+<body>
+    <h1>Análisis de texto</h1>
+    <!-- Zona de interacción con el usuario mediante area de texto -->
+    <label for="texto"><b>Introduce un texto:</b></label><br>
+    <textarea id="texto" rows="10" cols="60" placeholder="Escribe aquí..."></textarea><br><br>
+    <button onclick="analizaTexto()">Analizar</button>
+
+    <h2>Características del texto</h2>
+    <p><strong>Longitud del texto en caracteres:</strong> <span id="caracteres"></span></p>
+    <p><strong>Longitud del texto en palabras:</strong> <span id="palabras"></span></p>
+    <p><strong>Número de frases en el texto:</strong> <span id="frases"></span></p>
+    <p><strong>Los primeros 10 caracteres del texto en mayúsculas:</strong> <span id="mayusculas"></span></p>
+    <p><strong>Número de apariciones de "alumno" o "alumna" en el texto:</strong> <span id="alumno"></span></p>
+    <p><strong>Texto modificado de las palabras alumno/a por tu nombre:</strong></p>
+    <p id="textoModificado"></p>
+
+    <script>
+        function analizaTexto() {
+            let text = document.getElementById("texto").value; //Valor introducido en el area de texto
+            let nombre = "Javier"; // Valor de mi nombre
+
+            // Aplicamos la propiedad length para conocer la longitud del texto en caracteres
+            let caracteres = text.length;
+
+            // Longitud del texto en palabras asumiendo separadas por un espacio
+            //con el método trim() eliminamos los espacios en blanco si hubieran al principo o al final
+            let palabras = text.trim().split(/\s+/).length;
+
+            // Número de frases asumiendo separadas por un punto
+            //utiliamos el método split() que divide la cadena en cada "." en un array de subcadenas
+            let frases = text.split('.').filter(sentence => sentence.trim() !== "").length;
+
+            // Los primeros 10 caracteres en mayúsculas del texto
+            //Método ToUpperCase() para pasar a mayúsculas y slice() para extraer esos 10 carácteres
+            let mayusculas = text.slice(0, 10).toUpperCase();
+
+            // Número de apariciones de "alumno" o "alumna" 
+            let alumno = (text.match(/alumno|alumna/gi) || []).length;
+
+            // Reemplazar "alumno" o "alumna" por mi nombre con el método replace()
+            let textoModificado = text.replace(/alumno|alumna/gi, nombre);
+
+            // Actualizar el DOM con los resultados
+            document.getElementById("caracteres").innerText = caracteres;
+            document.getElementById("palabras").innerText = palabras;
+            document.getElementById("frases").innerText = frases;
+            document.getElementById("mayusculas").innerText = mayusculas;
+            document.getElementById("alumno").innerText = alumno;
+            document.getElementById("textoModificado").innerText = textoModificado;
+        }
+    </script>
+</body>
+</html>
